@@ -1,0 +1,443 @@
+/* 🌙 Reset cơ bản */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* 🌌 Nền & màu chung */
+body {
+  background: radial-gradient(circle at 20% 20%, #0a0f18, #06080f, #010409);
+  color: #e6edf3;
+  overflow-x: hidden;
+  position: relative;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* Tạo lớp sóng động bằng pseudo-element */
+body::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: repeating-radial-gradient(
+    circle at center,
+    rgba(0, 255, 255, 0.05) 0,
+    rgba(0, 255, 255, 0.05) 2px,
+    transparent 3px,
+    transparent 100px
+  );
+  animation: waveMove 20s linear infinite;
+  opacity: 0.25;
+  z-index: 0;
+  pointer-events: none; /* ✅ Cho phép click các phần tử phía trên */
+}
+
+@keyframes waveMove {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1.2); }
+}
+
+/* --- Navbar --- */
+.navbar {
+  background: rgba(13, 17, 23, 0.95);
+  backdrop-filter: blur(10px);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 12px rgba(0, 188, 212, 0.2);
+  transition: all 0.3s ease;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 22px;
+  color: #00ffff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #e6edf3;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #00ffff;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-links a:hover {
+  color: #00ffff;
+}
+
+/* --- Profile Page --- */
+.profile-container {
+  max-width: 800px;
+  margin: 100px auto;
+  text-align: center;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+}
+
+/* Avatar nổi bật hơn trên nền tối */
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #00ffff;
+  margin-bottom: 20px;
+  object-fit: cover;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+  animation: glowPulse 3s infinite ease-in-out;
+  transition: transform 0.4s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.7); }
+  50% { box-shadow: 0 0 35px rgba(0, 255, 255, 1); }
+}
+
+/* Tiêu đề lung linh */
+.highlight {
+  color: #00ffff;
+  text-shadow: 0 0 15px #00ffff, 0 0 30px #00eaff;
+  animation: shimmerText 2.5s infinite ease-in-out;
+}
+
+@keyframes shimmerText {
+  0%, 100% { text-shadow: 0 0 15px #00ffff, 0 0 30px #00eaff; }
+  50% { text-shadow: 0 0 25px #00ffff, 0 0 50px #00eaff; }
+}
+
+/* Tiêu đề phần */
+.skills h2, .contact h2 {
+  color: #00ffff;
+  border-left: 4px solid #00ffff;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+/* Danh sách kỹ năng */
+.skills, .contact {
+  margin-top: 40px;
+  text-align: left;
+}
+
+.skills li {
+  margin: 6px 0;
+  color: #c9d1d9;
+}
+
+.contact a {
+  color: #00ffff;
+  text-decoration: none;
+}
+
+.contact a:hover {
+  text-decoration: underline;
+}
+
+/* --- Hiệu ứng xuất hiện khi cuộn --- */
+.fade-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* --- Keyframes chung --- */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(25px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Project Cards */
+.project-list {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 1.5rem;
+}
+.project-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  transition: transform 0.4s ease, opacity 0.6s ease;
+  opacity: 0;
+  transform: translateY(40px);
+}
+.project-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.project-card:hover {
+  transform: translateY(-6px);
+}
+.project-card .tag {
+  background: #00bcd4;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  margin-right: 6px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* --- Footer --- */
+footer {
+  background: #0d1117;
+  color: #ddd;
+  text-align: center;
+  padding: 30px 20px;
+  margin-top: 60px;
+  border-top: 1px solid #222;
+}
+footer a {
+  color: #58a6ff;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+.footer-note {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #999;
+}
+
+/* --- Text Hiệu ứng --- */
+.neon-text {
+  position: relative;
+  display: inline-block;
+  color: #00eaff;
+  font-weight: 700;
+  text-shadow: 0 0 5px #00eaff, 0 0 10px #00eaff, 0 0 20px #00eaff, 0 0 40px #00eaff;
+  overflow: hidden;
+}
+.neon-text::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.9) 50%, transparent 100%);
+  animation: sweep 2.5s infinite;
+}
+@keyframes sweep {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+.metallic-neon-text {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: linear-gradient(
+    90deg,
+    #00ffff 0%,
+    #b3ffff 10%,
+    #00e0ff 30%,
+    #0066ff 50%,
+    #00e0ff 70%,
+    #b3ffff 90%,
+    #00ffff 100%
+  );
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: metallicNeonSweep 4s linear infinite;
+  text-shadow: 0 0 5px rgba(0,255,255,0.6), 0 0 10px rgba(0,255,255,0.4), 0 0 20px rgba(0,128,255,0.2);
+}
+@keyframes metallicNeonSweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* --- Certificates --- */
+.certificates {
+  margin: 80px 0;
+  text-align: center;
+}
+.certificates h2 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #6ee7b7;
+}
+.certificate-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+.certificate-card {
+  background: #111827;
+  color: #e6eef6;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 20px;
+  width: 310px;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,255,255,0.1);
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+}
+.certificate-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(0,255,255,0.25);
+}
+.certificate-card h3 {
+  color: #7dd3fc;
+  margin-bottom: 10px;
+}
+.cert-link {
+  color: #7dd3fc;
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  position: relative;
+  z-index: 3;
+  pointer-events: auto;
+  display: inline-block;
+}
+.cert-link:hover {
+  color: #6ee7b7;
+  text-shadow: 0 0 8px rgba(110,231,183,0.7);
+}
+.certificate-card p {
+  font-size: 0.93rem;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+.issued {
+  font-size: 0.85rem;
+  color: #9aa4b2;
+}
+.tag {
+  display: inline-block;
+  background: rgba(0,255,255,0.1);
+  border: 1px solid #00e0ff;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  margin-right: 5px;
+}
+/* --- Nút xem chi tiết chứng chỉ --- */
+.cert-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.cert-btn {
+  background: linear-gradient(90deg, #00e0ff, #00bcd4);
+  color: #fff;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+.cert-btn:hover {
+  background: linear-gradient(90deg, #00ffff, #00bcd4);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+.cert-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
+}
+
+.certificate-card:hover .cert-img {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+.cert-img-fixed {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 420px; /* giữ ảnh gọn gàng */
+  object-fit: contain; /* không cắt, hiển thị toàn bộ ảnh */
+  border-radius: 12px;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow:
+    0 0 10px rgba(0, 255, 255, 0.15),
+    0 0 25px rgba(0, 255, 255, 0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.certificate-card:hover .cert-img-fixed {
+  transform: scale(1.02);
+  box-shadow:
+    0 0 20px rgba(0, 255, 255, 0.3),
+    0 0 40px rgba(0, 255, 255, 0.25);
+}
+

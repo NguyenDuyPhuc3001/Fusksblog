@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nhà Thông Thái AI - Calculator</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#6ee7b7;
+      --accent-2:#7dd3fc;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue","Noto Sans",Arial;}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg) 0%, #081026 100%);
+      color:#e6eef6;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    /* Navbar */
+    .navbar{
+      width:100%;
+      max-width:1100px;
+      margin-top:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 16px;
+    }
+    .logo{font-weight:700;color:var(--accent);font-size:20px}
+    .nav-links{list-style:none;display:flex;gap:14px;margin:0;padding:0}
+    .nav-links a{
+      color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;
+    }
+    .nav-links a.active, .nav-links a:hover{
+      color:#021020;background:linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
+      box-shadow:0 4px 14px rgba(0,0,0,0.4);
+    }
+
+    /* Main card */
+    .card{
+      width:100%;
+      max-width:820px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;
+      margin:36px 16px;
+      padding:26px;
+      box-shadow:0 10px 30px rgba(2,6,23,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    h1{margin:0 0 8px 0;font-size:22px}
+    p.lead{color:var(--muted);margin:0 0 18px 0}
+
+    .form-row{display:flex;gap:10px;align-items:center}
+    input[type="number"]{
+      width:140px;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);
+      background:var(--glass); color:inherit; outline:none;
+    }
+    button{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#04202a;border:none;padding:10px 14px;border-radius:8px;font-weight:600;
+      cursor:pointer;
+    }
+    button:disabled{opacity:0.6;cursor:not-allowed}
+
+    .simulator{
+      margin-top:20px;
+      min-height:140px;
+      border-radius:10px;padding:14px;background:rgba(255,255,255,0.02);
+      border:1px solid rgba(255,255,255,0.02);
+    }
+
+    .progress-wrap{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;margin-top:10px}
+    .progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width 200ms linear}
+
+    .calc-line{
+      display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:8px;
+      background:transparent;color:var(--muted);margin-bottom:8px;font-family:monospace;
+      align-items:center;
+    }
+    .calc-line .expr{color:#cfeef7}
+    .result{
+      margin-top:12px;padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      text-align:center;font-size:20px;
+    }
+
+    .reveal{
+      color:#052014;background:linear-gradient(90deg,var(--accent),var(--accent-2));display:inline-block;padding:10px 18px;border-radius:999px;font-weight:700;
+      box-shadow: 0 8px 30px rgba(34,197,94,0.12);
+    }
+
+    .small{font-size:13px;color:var(--muted)}
+    .controls{display:flex;gap:10px;margin-top:12px}
+
+    /* small responsive */
+    @media (max-width:560px){
+      .form-row{flex-direction:column;align-items:stretch}
+      input[type="number"]{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Fúk's Blog</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Profile</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="calculator.html" class="active">Nhà Thông Thái AI</a></li>
+    </ul>
+  </header>
+
+  <main class="card" role="main">
+    <h1>Nhà Thông Thái AI</h1>
+    <p class="lead">Chào bạn, tôi là Mô Hình Thông Thái AI VIPPRO. Nhập tuổi của bạn, sau đó tôi sẽ thực hiện suy đoán của mình.</p>
+
+    <form id="ageForm" onsubmit="return false;">
+      <div class="form-row">
+        <label for="ageInput" class="small">Tuổi của bạn</label>
+        <input id="ageInput" type="number" min="0" max="130" step="1" placeholder="ví dụ: 24" required />
+        <button id="startBtn" type="submit">Bắt đầu</button>
+      </div>
+    </form>
+
+    <div class="simulator" id="simulator" aria-live="polite">
+      <div id="calcList" aria-hidden="false"></div>
+
+      <div class="progress-wrap" style="display:none" id="progressWrap" aria-hidden="true">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <!-- ✅ Đã thêm id="finalMessage" để JS hoạt động -->
+      <div id="finalResult" style="display:none" class="result" aria-hidden="true">
+        <div class="small" id="finalMessage">Suy Đoán của tôi là:</div>
+        <div style="margin-top:8px">
+          <span class="reveal" id="revealedAge">—</span>
+        </div>
+        <div style="margin-top:10px">
+          <button id="againBtn">Thử lại</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Helper random functions
+    function randInt(a, b){ return Math.floor(Math.random() * (b - a + 1)) + a; }
+    function pick(arr){ return arr[randInt(0, arr.length - 1)]; }
+
+    // Generate fake expression strings
+    function genExpr(){
+      const ops = ['+', '-', '×', '÷', '%', '^'];
+      const op = pick(ops);
+      let a = randInt(1, 999);
+      let b = randInt(1, 999);
+      if(op === '÷'){ b = randInt(1, 20); a = b * randInt(1, 50) + randInt(0, b-1); }
+      if(op === '^'){ b = randInt(2,5); a = randInt(1,15); }
+      let expr = `${a} ${op} ${b}`;
+      let res;
+      switch(op){
+        case '+': res = a + b; break;
+        case '-': res = a - b; break;
+        case '×': res = a * b; break;
+        case '÷': res = (a / b).toFixed(2); break;
+        case '%': res = a % b; break;
+        case '^': res = Math.pow(a,b); break;
+      }
+      return { expr, res };
+    }
+
+    const ageInput = document.getElementById('ageInput');
+    const startBtn = document.getElementById('startBtn');
+    const againBtn = document.getElementById('againBtn');
+    const calcList = document.getElementById('calcList');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressBar = document.getElementById('progressBar');
+    const finalResult = document.getElementById('finalResult');
+    const revealedAge = document.getElementById('revealedAge');
+
+    let simulationTimer = null;
+
+    function resetUI(){
+      calcList.innerHTML = '';
+      progressBar.style.width = '0%';
+      progressWrap.style.display = 'none';
+      finalResult.style.display = 'none';
+      revealedAge.textContent = '—';
+      ageInput.disabled = false;
+      startBtn.disabled = false;
+      if(simulationTimer) { clearInterval(simulationTimer); simulationTimer = null; }
+    }
+
+    function startSimulation(age){
+      ageInput.disabled = true;
+      startBtn.disabled = true;
+      calcList.innerHTML = '';
+      finalResult.style.display = 'none';
+
+      const steps = randInt(6, 12);
+      const totalMs = randInt(2200, 4800);
+      const stepMs = Math.max(180, Math.floor(totalMs / steps));
+
+      progressWrap.style.display = 'block';
+      progressBar.style.width = '0%';
+
+      let currentStep = 0;
+
+      simulationTimer = setInterval(() => {
+        currentStep++;
+        const {expr, res} = genExpr();
+        const line = document.createElement('div');
+        line.className = 'calc-line';
+        const left = document.createElement('div');
+        left.className = 'expr';
+        left.textContent = expr;
+        const right = document.createElement('div');
+        right.className = 'small';
+        right.textContent = Math.random() < 0.35 ? '... thinking' : res;
+        line.appendChild(left);
+        line.appendChild(right);
+        calcList.appendChild(line);
+        calcList.scrollTop = calcList.scrollHeight;
+
+        const pct = Math.round((currentStep / steps) * 100);
+        progressBar.style.width = pct + '%';
+
+        if(currentStep >= steps){
+          clearInterval(simulationTimer);
+          simulationTimer = null;
+          setTimeout(() => revealAge(age), 600 + randInt(200, 800));
+        }
+      }, stepMs);
+    }
+
+    function revealAge(age){
+      progressBar.style.width = '100%';
+      setTimeout(() => { progressWrap.style.display = 'none'; }, 250);
+
+      const message = document.getElementById('finalMessage');
+      message.textContent = `Suy đoán của tôi là: Bạn đã`;
+      revealedAge.textContent = age + ' tuổi!';
+
+      finalResult.style.display = 'block';
+
+      revealedAge.animate([
+        { transform: 'scale(0.9)', opacity: 0.6 },
+        { transform: 'scale(1.06)', opacity: 1 },
+        { transform: 'scale(1)', opacity: 1 }
+      ], { duration: 420, easing: 'cubic-bezier(.2,.9,.2,1)' });
+    }
+
+    startBtn.addEventListener('click', () => {
+      const val = ageInput.value.trim();
+      if(val === ''){
+        alert('Vui lòng nhập tuổi của bạn.');
+        ageInput.focus();
+        return;
+      }
+      const num = Number(val);
+      if(Number.isNaN(num) || num < 0 || num > 130){
+        alert('Nhập tuổi hợp lệ (0–130).');
+        ageInput.focus();
+        return;
+      }
+      resetUI();
+      startSimulation(String(num));
+    });
+
+    againBtn && againBtn.addEventListener('click', () => {
+      resetUI();
+      ageInput.value = '';
+      ageInput.disabled = false;
+      ageInput.focus();
+    });
+
+    resetUI();
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Giới thiệu về Java",
+    "date": "2025-10-18",
+    "summary": "Tổng quan về ngôn ngữ Java và cách nó được sử dụng trong lập trình hướng đối tượng.",
+    "link": "https://www.w3schools.com/java/java_intro.asp"
+  },
+  {
+    "title": "JavaScript là gì?",
+    "date": "2025-10-19",
+    "summary": "Bài viết giải thích JavaScript là gì, tại sao nó quan trọng trong phát triển web.",
+    "link": "https://www.w3schools.com/js/js_intro.asp"
+  },
+  {
+    "title": "So sánh Java và JavaScript",
+    "date": "2025-10-20",
+    "summary": "Hai ngôn ngữ khác nhau nhưng thường bị nhầm lẫn. Bài viết này giúp bạn phân biệt rõ.",
+    "link": "https://www.google.com/aclk?sa=L&pf=1&ai=DChsSEwil_c_-nK-QAxWaYA8CHbIdIW8YACICCAEQABoCdGI&co=1&ase=2&gclid=Cj0KCQjw9czHBhCyARIsAFZlN8QSIC-dNcrHVED40ZEir0oU0pnpw6zEx0vW7Om7yZG96X87602SJAgaAm6zEALw_wcB&cid=CAASsAHkaB7DQP_1X5v8PXOzP9uGY3Pm7L4WgQdP2HAe6hqKtSGjiIB9YxzHhnPPeGpOYAeQsEGDtHvt5r26ZSqq77_28bo2CTxBlwAA6fk4KwHl31RIAdhQhanYbrsAklLxz6Tb84Lt60it5rSKpvrTH3xg9nUl6QQC35k5skXBx94cyeAXVQ5Irg8bdnzYcfkRIsJdTMR_2Y4zCZwzypV0F9ojV3gCypidXBdDO73vOCtDIw&cce=2&category=acrcp_v1_32&sig=AOD64_0Ie_eqZn-FX6gjQyZsfoulm1B3wg&q&nis=4&adurl=https://www.coursera.org/articles/java-vs-javascript?utm_medium%3Dsem%26utm_source%3Dgg%26utm_campaign%3Db2c_apac_x_multi_ftcof_career-academy_cx_dr_bau_gg_pmax_gc_s2_all_m_hyb_24-08_x%26campaignid%3D21573875733%26adgroupid%3D%26device%3Dc%26keyword%3D%26matchtype%3D%26network%3Dx%26devicemodel%3D%26creativeid%3D%26assetgroupid%3D6544910561%26targetid%3D%26extensionid%3D%26placement%3D%26gad_source%3D1%26gad_campaignid%3D21584159401%26gbraid%3D0AAAAADdKX6ZAePwCmKEpQkcYu9wkMEly6%26gclid%3DCj0KCQjw9czHBhCyARIsAFZlN8QSIC-dNcrHVED40ZEir0oU0pnpw6zEx0vW7Om7yZG96X87602SJAgaAm6zEALw_wcB&ved=2ahUKEwj06Mr-nK-QAxV6avUHHUO-L0AQ0Qx6BAgWEAE"
+  },
+  {
+    "title": "Lập trình hướng đối tượng trong Java",
+    "date": "2025-10-21",
+    "summary": "Khái niệm class, object, kế thừa và đóng gói trong Java – nền tảng của lập trình hướng đối tượng.",
+    "link": "#"
+  },
+  {
+    "title": "DOM trong JavaScript là gì?",
+    "date": "2025-10-22",
+    "summary": "Tìm hiểu Document Object Model và cách JavaScript thao tác với các phần tử HTML.",
+    "link": "#"
+  },
+  {
+    "title": "Xử lý sự kiện trong JavaScript",
+    "date": "2025-10-23",
+    "summary": "Cách thêm và quản lý sự kiện như click, hover hoặc nhập liệu bằng JavaScript.",
+    "link": "#"
+  },
+  {
+    "title": "Các kiểu dữ liệu trong Java",
+    "date": "2025-10-24",
+    "summary": "Tìm hiểu về kiểu dữ liệu nguyên thủy, tham chiếu và cách Java quản lý bộ nhớ.",
+    "link": "#"
+  },
+  {
+    "title": "Promise và Async/Await trong JavaScript",
+    "date": "2025-10-25",
+    "summary": "Hiểu cách xử lý bất đồng bộ trong JavaScript thông qua Promise và cú pháp async/await.",
+    "link": "#"
+  },
+  {
+    "title": "Xử lý ngoại lệ trong Java",
+    "date": "2025-10-26",
+    "summary": "Tìm hiểu cơ chế try-catch-finally và cách quản lý lỗi trong lập trình Java hiệu quả.",
+    "link": "#"
+  }
+]
